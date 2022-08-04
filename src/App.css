@@ -1,0 +1,33 @@
+* {
+  font-size: 17px;
+}
+
+.App {
+  text-align: left;
+  padding-top: 20px;
+  padding-left: 50px;
+}
+.form-container {
+  padding-left: 30px;
+}
+.inputBox {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.summary {
+  display: inline-block;
+  width: 400px;
+  height: 300px;
+  margin-top: 10px;
+}
+
+.acomment {
+  margin-right: 20px;
+}
+
+.addbutton {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}

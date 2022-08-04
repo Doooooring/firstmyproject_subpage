@@ -1,0 +1,33 @@
+.headtag {
+  display: block;
+  width: 100%;
+  height: 100px;
+  color: white;
+  margin-bottom: 20px;
+  font-size: 60px;
+  border: 2px solid black;
+  padding-left: 20px;
+}
+
+.head1 {
+  text-align: right;
+}
+
+.head2 {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.head3 {
+  padding-left: 20px;
+}
+
+.navlink {
+  display: inline-block;
+  font-size: 20px;
+  color: black;
+  border: 2px double black;
+  padding: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
