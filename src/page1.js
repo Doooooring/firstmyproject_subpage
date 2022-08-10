@@ -5,8 +5,10 @@ import LinkList from './linklist.js'
 export default function Page1({ handleCurrentPage }) {
   const [newsTitle, handleNewsTitle] = useState('')
   const [newsSubTitle, handleSubTitle] = useState('')
-  const [newsTerm, handleTerm] = useState('')
-  const [newsState, handleState] = useState('')
+  const [newsTermStart, handleTermStart] = useState('')
+  const [newsTermEnd, handleTermEnd] = useState('')
+  const [newsState, handleState] = useState('진행 중')
+  const [stateIsEnd, handleStateIsEnd] = useState(false)
   const [newsKeyWord, handleNewsKeyWord] = useState('')
   const [newsSummary, handleNewsSummary] = useState('')
   const [aComment, handleAComment] = useState('')
@@ -21,7 +23,7 @@ export default function Page1({ handleCurrentPage }) {
   }
   function deleteNewsLink() {
     if (nextid.current == 1) {
-      alert('뭘 또 없애 시발')
+      alert('뭘 또 없애')
     } else {
       handleLinkList([...linkList.slice(0, linkList.length - 1)])
       nextid.current -= 1
@@ -41,7 +43,7 @@ export default function Page1({ handleCurrentPage }) {
     if (
       newsTitle === '' ||
       newsSubTitle === '' ||
-      newsTerm === '' ||
+      newsTermStart === '' ||
       newsState === '' ||
       newsKeyWord === '' ||
       newsSummary === '' ||
@@ -49,13 +51,14 @@ export default function Page1({ handleCurrentPage }) {
       bComment === '' ||
       checklistList()
     ) {
-      alert('씨발 다 안 채웠잖아')
+      alert('다 안 채웠잖아')
     } else {
       const keysToSend = newsKeyWord.trim().replaceAll(' ', '')
       const JsonToSend = {
         title: `${newsTitle}`,
         subtitle: `${newsSubTitle}`,
-        term: `${newsTerm}`,
+        termStart: `${newsTermStart}`,
+        termEnd: `${newsTermEnd}`,
         state: `${newsState}`,
         key: `${keysToSend}`,
         summary: `${newsSummary}`,
@@ -74,7 +77,8 @@ export default function Page1({ handleCurrentPage }) {
             handleNewsKeyWord('')
             handleNewsTitle('')
             handleSubTitle('')
-            handleTerm('')
+            handleTermStart('')
+            handleTermEnd('')
             handleState('')
             handleNewsSummary('')
             handleAComment('')
@@ -86,7 +90,15 @@ export default function Page1({ handleCurrentPage }) {
         })
     }
   }
-
+  function handleCheckBox(e) {
+    if (e.target.value != '진행 중' && e.target.value != '흐지부지..') {
+      handleState('')
+      handleStateIsEnd(true)
+    } else {
+      handleState(e.target.value)
+      handleStateIsEnd(false)
+    }
+  }
   return (
     <form
       onSubmit={(e) => {
@@ -106,7 +118,7 @@ export default function Page1({ handleCurrentPage }) {
       <br></br>
       부제 :{' '}
       <input
-        placeholder="ex) 이재명 vs 기준식"
+        placeholder="ex) 김민재 vs 기준식"
         value={newsSubTitle}
         className="inputBox"
         onChange={(e) => {
@@ -114,27 +126,68 @@ export default function Page1({ handleCurrentPage }) {
         }}
       ></input>
       <br></br>
-      기간 :{' '}
+      상태 :
       <input
-        placeholder="ex) 2022-01-01~ or 2022-01-01~2022-02-02"
-        value={newsTerm}
-        className="inputBox"
-        onChange={(e) => {
-          handleTerm(e.target.value)
-        }}
-      ></input>
-      <br></br>
-      상태 :{' '}
+        type="radio"
+        checked={newsState === '진행 중'}
+        onClick={handleCheckBox}
+        name="state"
+        value="진행 중"
+        className="state-check-box"
+      ></input>{' '}
+      진행 중
       <input
-        placeholder="상태"
+        type="radio"
+        checked={newsState === '흐지부지..'}
+        onClick={handleCheckBox}
+        name="state"
+        value="흐지부지.."
+        className="state-check-box"
+      ></input>{' '}
+      흐지부지..
+      <input
+        type="radio"
+        checked={newsState != '진행 중' && newsState != '흐지부지..'}
+        onClick={handleCheckBox}
+        name="state"
+        value="end"
+        className="state-check-box"
+      ></input>{' '}
+      끝남
+      <input
+        placeholder="끝난 경우 멘트 자유롭게 적으셈"
         value={newsState}
         className="inputBox"
         onChange={(e) => {
           handleState(e.target.value)
         }}
+        style={{
+          display: stateIsEnd ? 'inline' : 'none',
+          width: '300px',
+          marginLeft: '10px',
+        }}
       ></input>{' '}
-      # 진행 중인 상태 -> "진행 중" , 끝난건지 아닌지 모르겠음 -> "흐지부지..",
-      끝남 -> 자유롭게 적으셈 # 형식 안맞추면 에러나니 조심하셈
+      <br></br>
+      기간 :{' '}
+      <input
+        type="date"
+        value={newsTermStart}
+        className="inputBox"
+        onChange={(e) => {
+          handleTermStart(e.target.value)
+        }}
+        style={{ marginLeft: '20px', marginRight: '20px' }}
+      ></input>
+      ~
+      <input
+        type="date"
+        value={newsTermEnd}
+        className="inputBox"
+        onChange={(e) => {
+          handleTermEnd(e.target.value)
+        }}
+        style={{ display: stateIsEnd ? 'inline' : 'none', marginLeft: '20px' }}
+      ></input>
       <br></br>
       <input
         placeholder="관련 키워드"

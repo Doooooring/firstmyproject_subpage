@@ -167,9 +167,6 @@ export default function Page4({ handleCurrentPage }) {
             placeholder="제목"
             value={newsTitle}
             className="inputBox"
-            onChange={(e) => {
-              handleNewsTitle(e.target.value)
-            }}
           ></input>
           <br></br>
           부제 :{' '}
@@ -177,9 +174,6 @@ export default function Page4({ handleCurrentPage }) {
             placeholder="ex) 이재명 vs 기준식"
             value={newsSubTitle}
             className="inputBox"
-            onChange={(e) => {
-              handleSubTitle(e.target.value)
-            }}
           ></input>
           <br></br>
           기간 :{' '}
